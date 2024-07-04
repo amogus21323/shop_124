@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from account.send_email import send_confirmation_email, send_confirmation_password
+from shop_ada.tasks import send_confirmation_email_task, send_confirmation_password_task
 from account.serializers import (
     RegistrationSerializer,
     ActivationSerializer,
@@ -31,7 +32,10 @@ class RegistrationView(APIView):
         user = serializer.save()
         if user:
             try:
-                send_confirmation_email(email=user.email, code=user.activation_code)
+                # send_confirmation_email(email=user.email, code=user.activation_code)
+                send_confirmation_email_task.delay(
+                    email=user.email, code=user.activation_code
+                )
                 logger.info(
                     f"User {user.email} был зарегистрирован и сообщение было отправлено на почту"
                 )
@@ -89,7 +93,8 @@ class RegistrationTemplateView(APIView):
             user = serializer.save()
             if user:
                 try:
-                    send_confirmation_email(user.email, user.activation_code)
+                    # send_confirmation_email(user.email, user.activation_code)
+                    send_confirmation_email_task.delay(user.email, user.activation_code)
                     return redirect("activation")
                 except:
                     return Response(
@@ -162,7 +167,8 @@ class ResetPasswordView(APIView):
                 user = User.objects.get(email=email)
                 user.create_activation_code()
                 user.save()
-                send_confirmation_password(user.email, user.activation_code)
+                # send_confirmation_password(user.email, user.activation_code)
+                send_confirmation_password_task.delay(user.email, user.activation_code)
                 return Response({"activation_code": user.activation_code}, status=200)
             except:
                 return Response(
