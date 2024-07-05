@@ -1,0 +1,9 @@
+WARNING 2024-07-04 06:06:53,403 log Not Found: /static/admin/css/base.css
+WARNING 2024-07-04 06:06:53,421 log Not Found: /static/admin/css/nav_sidebar.css
+WARNING 2024-07-04 06:06:53,437 log Not Found: /static/admin/css/dark_mode.css
+WARNING 2024-07-04 06:06:53,594 log Not Found: /static/admin/css/responsive.css
+WARNING 2024-07-04 06:06:53,610 log Not Found: /static/admin/css/login.css
+WARNING 2024-07-04 06:06:53,626 log Not Found: /static/admin/js/theme.js
+WARNING 2024-07-04 06:06:54,577 log Not Found: /static/admin/js/nav_sidebar.js
+WARNING 2024-07-04 06:07:06,673 log Not Found: /
+WARNING 2024-07-04 06:07:39,626 log Not Found: /favicon.ico
